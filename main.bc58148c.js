@@ -1,41 +1,4 @@
-const email = document.getElementById('email');
-const subject = document.getElementById('subject');
-const messages = document.getElementById('message');
 
-function isValid(e){
-    e.event.preventDefault();
-    let subject_value = subject.value.trim();
-    let messages_value = messages.value.trim();
-
-    if (validateEmail() === false){
-        document.getElementById('error_mail').style.visibility = "visible";
-        return false;
-    }else if(subject_value.length < 10){
-        document.getElementById('error_sub').style.visibility = "visible";
-        return false;
-    }else if(messages_value.length < 50){
-        document.getElementById('error_message').style.visibility = "visible";
-        return false;
-    }
-    else{
-        document.getElementById('error_mail').style.visibility = "hidden";
-        document.getElementById('error_sub').style.visibility = "hidden";
-        document.getElementById('error_message').style.visibility = "hidden";
-        document.getElementById('myform').reset();
-        return true;
-
-    }
-
-  }
-function validateEmail() 
-  {
-    let email_id  = email.value.trim();
-   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email_id) && email_id.length > 6)
-    {
-      return (true)
-    }
-      return (false)
-  }
 
 !(function (t) {
   function e(i) {

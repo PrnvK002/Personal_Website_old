@@ -8,8 +8,7 @@
   <meta content="description" name="description">
   <meta name="google" content="notranslate" />
   <meta content="Mashup templates have been developped by Orson.io team" name="author">
-  <!-- ajax  -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
   
@@ -266,7 +265,7 @@
           <div class="card-block">
             <h2>Contact</h2>
             <small id="error_mail" style="color:red;visibility:hidden" >Enter a valid email-id</small>
-            <form action="#" class="reveal-content" id="myform" onsubmit="return(isValid());">
+            <form action="#" class="reveal-content" id="myform" onclick="return(validSubmit());">
               <div class="form-group">
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
               </div>
@@ -274,7 +273,13 @@
               <div class="form-group">
                 <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
               </div>
+            <small id="error_phone" style="color:red;visibility:hidden" >Phone number must contain 10 numbers</small>
+
+            <div class="form-group">
+              <input type="number" class="form-control" id="phone" name="phone" placeholder="Phone number" required>
+            </div>
             <small id="error_message" style="color:red;visibility:hidden" >Enter a valid message atleast 50 characters</small>
+
               <div class="form-group">
                 <textarea class="form-control" id="message" rows="5" name="message" placeholder="Enter your message" required></textarea>
               </div>
@@ -319,31 +324,87 @@
   </div>
 </footer>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function (event) {
-     scrollRevelation('.card');
-  });
-</script>
-<script type="text/javascript" src="./main.bc58148c.js"></script>
-<script>
-  $("#myform").submit((e)=>{
-      e.preventDefault()
-      $.ajax({
-          url:"https://script.google.com/macros/s/AKfycbwre-2hMUBcs07uJ2yPhWCG_iyAi5GFDX5-pHI98Na_8Hk9lDq3YRNxIZP2mE1N8uz0/exec",
-          data:$("#myform").serialize(),
-          method:"post",
-          success:function (response){
-              alert("Form submitted successfully")
-              window.location.reload()
-              //window.location.href="https://google.com"
-          },
-          error:function (err){
-              alert("Something Error")
+  <!-- ajax  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+      scrollRevelation('.card');
+    });
+  </script>
+  <script type="text/javascript" src="./main.bc58148c.js"></script>
 
-          }
-      })
-  })
-</script>
+    <!-------------------- validation and submission ------------->
+
+  <script>
+  const email = document.getElementById('email');
+  const subject = document.getElementById('subject');
+  const messages = document.getElementById('message');
+  const phone = document.getElementById('phone');
+  function validSubmit(){
+    if(isValid() == true)
+    {
+        
+          $.ajax({
+              url:"https://script.google.com/macros/s/AKfycbwre-2hMUBcs07uJ2yPhWCG_iyAi5GFDX5-pHI98Na_8Hk9lDq3YRNxIZP2mE1N8uz0/exec",
+              data:$("#myform").serialize(),
+              method:"post",
+              success:function (response){
+                  alert("Form submitted successfully")
+                  window.location.reload()
+                  //window.location.href="https://google.com"
+              },
+              error:function (err){
+                  alert("Something Error")
+
+              }
+          })
+          return true;
+      }
+      else{
+          return false;
+      }
+    }
+  
+  function isValid(){
+
+      let subject_value = subject.value.trim();
+      let messages_value = messages.value.trim();
+      let phone_value = phone.value;
+      if (validateEmail() === false){
+          document.getElementById('error_mail').style.visibility = "visible";
+          return false;
+      }else if(subject_value.length < 10){
+          document.getElementById('error_sub').style.visibility = "visible";
+          return false;
+
+      }else if(messages_value.length < 50){
+          document.getElementById('error_message').style.visibility = "visible";
+          return false;
+          
+      }else if(phone_value.length > 10){
+        document.getElementById('error_phone').style.visibility = "visible";
+          return false;
+      }
+      else{
+          document.getElementById('error_mail').style.visibility = "hidden";
+          document.getElementById('error_sub').style.visibility = "hidden";
+          document.getElementById('error_message').style.visibility = "hidden";
+          return true;
+      }
+    }
+function validateEmail() 
+  {
+    let email_id  = email.value.trim();
+   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email_id) && email_id.length > 6)
+    {
+      return (true)
+    }
+      return (false)
+  }
+ 
+    
+  </script>
 </body>
 
 </html>
