@@ -352,7 +352,7 @@
       if (validateEmail() === false){
           document.getElementById('error_mail').style.visibility = "visible";
           return false;
-      }else if(subject_value.length < 10){
+      }else if(10 < subject_value.length < 10){
           document.getElementById('error_sub').style.visibility = "visible";
           return false;
 
