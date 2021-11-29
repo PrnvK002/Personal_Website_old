@@ -352,15 +352,15 @@
       if (validateEmail() === false){
           document.getElementById('error_mail').style.visibility = "visible";
           return false;
-      }else if(10 < subject_value.length < 10){
+      }else if(subject_value.length < 5){
           document.getElementById('error_sub').style.visibility = "visible";
           return false;
 
       }
-      else if(phone_value.length < 10 ){
+      else if(phone_value.length < 10 && phone_value.length > 10 ){
         document.getElementById('error_phone').style.visibility = "visible";
           return false;
-      }else if(messages_value.length < 20){
+      }else if(messages_value.length < 10){
           document.getElementById('error_message').style.visibility = "visible";
           return false;
           
